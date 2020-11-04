@@ -1,0 +1,281 @@
+#################################################################################################################################################
+
+public class Principal {
+	public static void main() {
+	
+	Entrega padrao = new Entrega(146, "18/01/2020", 27);
+	padrao.setCodigo(123);
+	padrao.setData("18/01/2020");
+	padrao.setPreco(27);
+	padrao.setProdutos(null);
+	
+	Cliente jefferson = new Cliente(123, "Jefferson Castro", "Rua Dos Anjos");
+	jefferson.setCodigo(123);
+	jefferson.setEndereco("Rua Dos Anjos");
+	jefferson.setNome("Jefferson Castro");
+	
+	Produto pizza = new Produto(1, "Pizza De Chocolate", 1);
+	pizza.setCodigo(1);
+	pizza.setNome("Pizza de Chocolate");
+	pizza.setPeso(1);
+	
+	Produto pizza1 = new Produto(2, "Pizza De Frango", 1);
+	pizza1.setCodigo(2);
+	pizza1.setNome("Pizza de Frango");
+	pizza1.setPeso(1);
+	
+	Produto pizza2 = new Produto(3, "Pizza De Calabresa", 1);
+	pizza2.setCodigo(3);
+	pizza2.setNome("Pizza de Calabresa");
+	pizza2.setPeso(1);
+	
+	System.out.println(padrao.preco);
+	System.out.println(padrao.getPesoTotal());
+	System.out.println(padrao.produtosIndex);
+	
+	
+	
+	EntregaExpressa expressa = new EntregaExpressa(4, "19/01/2020", 2);
+	expressa.setAdicional(10);
+	expressa.setCodigo(2);
+	expressa.setData("19/09/2020");
+	expressa.setPreco(27);
+	expressa.setProdutos(null);
+	
+	Cliente roberto = new Cliente(146, "Roberto Lima", "Rua D");
+	roberto.setCodigo(144);
+	roberto.setEndereco("Rua D");
+	roberto.setNome("Roberto Lima");
+	
+	Produto pizza3 = new Produto(1, "Pizza De Chocolate", 1);
+	pizza3.setCodigo(4);
+	pizza3.setNome("Pizza de Palmito");
+	pizza3.setPeso(1);
+	
+	Produto pizza4 = new Produto(2, "Pizza De Frango", 1);
+	pizza4.setCodigo(5);
+	pizza4.setNome("Pizza de Milho");
+	pizza4.setPeso(1);
+	
+	Produto pizza5 = new Produto(3, "Pizza De Calabresa", 1);
+	pizza5.setCodigo(6);
+	pizza5.setNome("Pizza de Ovo");
+	pizza5.setPeso(1);
+	
+	System.out.println(padrao.preco);
+	System.out.println(padrao.getPesoTotal());
+	System.out.println(padrao.produtosIndex);
+	 
+	
+	}
+}
+
+#################################################################################################################################################
+
+
+public class Cliente {
+
+	//Construtor com argumento:
+	public Cliente(int codigo, String nome,String endereco) {
+		this.codigo=codigo;
+		this.nome=nome;
+		this.endereco = endereco;
+		}
+		
+	//Construtor sem argumento(default):
+	public Cliente() {}
+	
+	
+	private int codigo;
+	private String nome;
+	private String endereco;
+	
+	
+	public void setCodigo(int codigo) {
+		this.codigo = codigo;
+	}
+	public int getCodigo() {
+		return codigo;
+	}
+	
+	
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+	public String getNome() {
+		return nome;
+	}
+	
+	
+	public void setEndereco(String endereco) {
+		this.endereco = endereco;
+	}
+	public String getEndereco() {
+		return endereco;
+	}
+}
+
+#################################################################################################################################################
+
+
+public class Entrega  {
+
+	// construtor sem arguemnto
+	public Entrega(int codigo, String data, float preco) {
+	this.codigo= codigo;
+	this.data = data;
+	this.preco=preco;
+	
+	
+	}
+
+	// Construtor com argumento (Default)
+	public Entrega() {}
+
+	private int codigo;
+	private String data;
+	//Mudei para protected para ser visível na classe que herda Entrega. (EntregaExpressa)
+	protected float preco;
+	//Array de produtos a serem entregues.
+	private Produto[] produtos = new Produto[10];
+	//Índice de produtos
+	int produtosIndex = 0;
+
+	//setters e getters dos atributos privados.
+	public void setCodigo(int codigo) {
+		this.codigo = codigo;
+	}
+
+	public int getCodigo() {
+		return codigo;
+	}
+
+	public void setData(String data) {
+		this.data = data;
+	}
+
+	public String getData() {
+		return data;
+	}
+
+	
+	public void setPreco(float preco) {
+		this.preco = preco;
+	}
+/*
+	 * Aqui Professor, o getPreco recebe a distancia, que é passada como parâmetro
+	 * pelo usuário no código e multiplica o preço, que é retornado já em função da distância.
+	 * achei que tinha que inicial a distância e fazer os setters e getters dela, porém 
+	 * depois vi que a instancia pode ser inserida como parâmetro, o que tornou bem mais fácil 
+	 * fazer.
+*/
+	public float getPreco(float distancia) {
+		return preco * distancia;
+	}
+	
+
+	
+/*
+	 *Aqui inicio o Setters e Getters da array de produtos. 
+*/
+	public void setProdutos(Produto[] produtos) {
+		this.produtos = produtos;
+	}
+
+	public Produto[] getProdutos() {
+		return produtos;
+	}
+/*
+ *Aqui Professor, é o método em que eu adiciono produtos a minha array, parecido com o setter 
+ *porém, há um If que percorre o 
+ *índice de produtos e se o índice for igual a zero, o primeiro produto é cadastrado a 
+ *array produto.
+ *Quando o primeiro produto é cadastrado ele adiciona +1 ao índice "produtosIndex" que se torna 
+ *de índice 1 e parte para o outro condicional, que usa o método .lenght para checar o
+ *tamanho do vetor produtosIndex e faz uma comparação, se for menor que o tamanho final do array,
+ *entra no segundo condicional, que pergunta se o indice de produtos é igual a null (que são os
+ *elementos da array que não estão sendo usados). Ao fazer essa comapração e o idex for um tamanho
+ *que não está sendo usado, ele adiciona nesse indice até ele se tornar maior que o null, 
+ *que aí, quando não há mais condicionais, ele para e não adiciona mais produtos ao vetor.
+*/
+	public void addProduto(Produto produto) {
+		if (produtosIndex == 0) {
+			produtos[0] = produto;
+			produtosIndex++;
+			return;
+		}
+		if (produtosIndex < produtos.length) {
+			if (produtos[produtosIndex] == null) {
+				produtos[produtosIndex] = produto;
+				produtosIndex++;
+			}
+		} 
+		
+	
+	}
+
+	/*
+	 * Nesse método eu retorno o produto a partir do Índice que eu quiser, também inserido como parâmetro.
+	 * Se eu quiser o índice 7 por exemplo, eu insiro o índice no lugar do id e ele retorna o 
+	 * Índice 7.
+	*/
+	public Produto getProdutoById(int id) {
+		return produtos[id];
+	}
+
+	/*
+	 * Aqui professor, eu calculo o peso total dos produtos, inicializo ele igualando a zero,
+	 * abro um laço para o vetor produtos e para a classe Produto e atríbuo (usando o +=) ao
+	 * "total", após isso, retorno o total. Eu vi o outro jeito que o senhor mandou no grupo
+	 * mas estranhamente eu achei que esse fez mais sentido pra mim.
+	*/
+	public float getPesoTotal() {
+		float total = 0;
+
+		for (Produto produto : produtos) {
+			total += produto.getPeso();
+		}
+
+		return total;
+	}
+
+}
+
+#################################################################################################################################################
+
+
+/*
+ * Aqui a classe EntregaExpressa herda de entrega e sobrescreve para adicionar o valor adicional.
+ * fiz ele usando o extends para herdar os arguemntos preco da classe Entrega.
+ * 
+ */
+public class EntregaExpressa extends Entrega {
+
+    public EntregaExpressa(int codigo, String data, float preco) {
+		super(codigo, data, preco);
+		
+	}
+
+	float adicional;
+
+    public float getAdicional() {
+        return adicional;
+    }
+
+    public void setAdicional(float adicional) {
+        this.adicional = adicional;
+    }
+
+    /*
+     * Aqui subrescrevo o método getPreco da entrega normal, adiciono o adicional ao preço
+     * e multiplico pela distancia. Ambos passados como parâemtro e retornados com a adição
+     * e multiplicação já realizadas.
+    */
+    public float getPreco(float distancia) {
+        
+        return (preco + adicional) * distancia;
+    }
+}
+
+#################################################################################################################################################
+
